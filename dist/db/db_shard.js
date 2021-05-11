@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getShortURL = exports.insertURL = exports.getServer = exports.hashit = exports.connectToShards = void 0;
 const pg_1 = __importDefault(require("pg"));
 const crypto_1 = __importDefault(require("crypto"));
-const consistent_hash_1 = __importDefault(require("consistent-hash"));
+const consistent_hash_1 = __importDefault(require("./consistent-hash"));
 const ring = new consistent_hash_1.default();
 const FROM_PORT = 5432;
 const TO_PORT = 5434;
@@ -45,6 +45,7 @@ function connectToShards() {
             catch (err) {
                 console.error(err);
             }
+            console.log("Adding " + i.toString() + " ");
             ring.add(i.toString());
         }
     });

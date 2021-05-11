@@ -1,7 +1,7 @@
 import pg from "pg";
 import crypto from "crypto";
-import ConsistentHash from "consistent-hash";
-const ring= new ConsistentHash();
+import ConsistentHash from "./consistent-hash"
+const ring=new ConsistentHash();
 
 
 const FROM_PORT=5432;
@@ -37,7 +37,7 @@ export async function connectToShards(){
         }catch(err){
             console.error(err);
         }
-        
+        console.log("Adding "+i.toString()+" ")
         ring.add(i.toString());
     }
 }
@@ -60,3 +60,4 @@ export async function getShortURL(port:string,urlId:string){
     console.log("IN getshort "+res.rowCount)
     return res;
 }
+

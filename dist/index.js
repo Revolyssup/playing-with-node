@@ -16,9 +16,13 @@ const express_1 = __importDefault(require("express"));
 const db_shard_1 = require("./db/db_shard");
 const app = express_1.default();
 db_shard_1.connectToShards();
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/:urlID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const urlID = req.params.urlID;
     console.log("Got request to decode shortened URL " + urlID);
+    if (!urlID)
+        res.json({
+            "err:": "Invalid urlID"
+        });
     const server = db_shard_1.getServer(urlID);
     console.log("server: " + server);
     const ans = yield db_shard_1.getShortURL(server, urlID);

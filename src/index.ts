@@ -2,9 +2,12 @@ import express from 'express'
 import {connectToShards,hashit,getServer,insertURL,getShortURL} from "./db/db_shard"
 const app=express();
 connectToShards();
-app.get("/",async (req,res)=>{
+app.get("/:urlID",async (req,res)=>{
     const urlID=req.params.urlID
     console.log("Got request to decode shortened URL "+urlID)
+    if(!urlID) res.json({
+        "err:" : "Invalid urlID"
+    })
     const server=getServer(urlID);
     console.log("server: "+server)
     const ans=await getShortURL(server,urlID);
